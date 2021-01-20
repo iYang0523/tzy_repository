@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<script type="text/javascript">
+    // function fun() {
+    //     document.getElementById("form").action="/findall";
+    //     document.getElementById("form").submit();
+    // }
+</script>
+<body>
+<div>
+  <button> <a href="/add" th:href="@{/add}">添加</a></button>
+</div>
+<div>
+    <button>  <a href="/tongji" th:href="@{/tongji}">统计</a></button>
+</div>
+<form th:action="@{/findall}" th:method="post" id="up">
+名称:<input type="text" th:placeholder="查询" th:name="name" th:value="${name}"><br>
+  时间: <input th:type="date" th:name="birthday" th:value="${#dates.format(birthday,'yyyy-MM-dd')}"><br>
+    地址:<input type="text" name="dizhi" th:value="${dizhi}" th:placeholder="地址">
+    <input type="submit" value="查询">
+<table border="1" cellpadding="0">
+    <tr>
+        <td>ID</td>
+        <td>姓名</td>
+        <td>地址</td>
+        <td>性别</td>
+        <td>生日</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="to : ${st}">
+        <td th:text="${to.id}"></td>
+        <td th:text="${to.name}"></td>
+        <td><span th:text="${to.dizhi}"/></td>
+        <td><span th:if="${to.sex}=='1'">男</span>
+            <span th:if="${to.sex}=='2'">女</span>
+        </td>
+        <td th:text="${#dates.format(to.birthday,'yyyy-MM-dd')}"></td>
+        <td>
+            <a th:href="@{/dele(id=${to.id})}">删除</a>
+            <a th:href="@{/upda(id=${to.id})}">修改</a>
+        </td>
+    </tr>
+</table>
+
+
+    <input type="hidden" th:value="${Number}" name="pageNums" id="pag">
+    <input type="hidden" th:value="${TotalPages}" id="total">
+    <input type="hidden" id="pn">
+
+<!--当前页数:<span th:text="${PageNum}" id="p"/>-->
+<!--总页数:<span th:text="${Size}"/>-->
+<!--条数:<span th:text="${Total}" id="p2"/>-->
+<!--hasPrevious:是否有上一页    <span th:text="${to.sheng}"/><span th:text="${to.shi}"/><span th:text="${to.xian}"/>-->
+<!--hasNext:是否有下一页-->
+    <p>当前<span th:text="${pageInfo.getNumber()} + 1"></span>页,总<span th:text="${pageInfo.totalPages}"  th:id="oo"></span>页,共<span th:text="${pageInfo.totalElements}"></span>条记录
+<!--        <a th:href="@{/findall}">首页</a>-->
+<!--        <a th:href="@{/findall(pageNum = ${pageInfo.hasPrevious()} ? ${pageInfo.getNumber() } : 1)}">上一页</a>-->
+<!--        <a th:href="@{/findall(pageNum = ${pageInfo.hasNext()} ? ${pageInfo.getNumber()} + 2 : ${pageInfo.totalPages})}">下一页</a>-->
+<!--        <a th:href="@{/findall(pageNum = ${pageInfo.totalPages})}">尾页</a></p>-->
+
+        <input th:type="button" onclick="fun()" th:value="首页">
+        <input th:type="button" onclick="fun1()" th:value="上一页">
+        <input th:type="button" onclick="fun2()" th:value="下一页">
+        <input th:type="button" onclick="fun3()" th:value="尾页">
+
+
+<input th:name="page" th:placeholder="请输入页码">
+<input th:type="button" th:value="跳转" th:onclick="javascript:click1()">
+<!--<span type="hidden" th:text="${pageInfo.totalPages}" th:id="oo"></span>     共几页-->
+
+</form>
+</body>
+<!--th:onclick="'javascript:add('+${param}+')'"   "/findall?pageNum="+pageNum;-->
+<script type="text/javascript">
+    function click1() {
+        var pageNum = document.getElementsByName("page")[0].value;
+        // var pages = ${pageInfo.pages};
+       var em= parseInt(pageNum)-1;
+        var pa = document.getElementById("oo").innerHTML;
+        if(parseInt(pageNum)>0&&parseInt(pageNum)<=parseInt(pa)){
+            document.getElementById("pag").value=em;
+            document.getElementById("up").action="/findall";
+            document.getElementById("up").submit();
+        }else {
+            alert("页码输入错误");
+        }
+    }
+ // 首页
+    function fun(){
+    var em=0;
+        document.getElementById("pag").value=em;
+        document.getElementById("up").action="/findall";
+        document.getElementById("up").submit();
+    }
+    //上一页
+    function fun1(){
+        var elementById = document.getElementById("pag").value;
+        var em=elementById-1;
+        if(em<0){
+
+        }else {
+            document.getElementById("pag").value=em;
+            document.getElementById("up").action="/findall";
+            document.getElementById("up").submit();
+        }
+    }
+    // 下一页
+    function fun2(){
+  var elementById = document.getElementById("pag").value;
+  var count=1;
+ var elemen= parseInt(elementById)+count;
+
+ var total =document.getElementById("total").value;
+  if(elemen>(total-1)){
+  }else {
+      document.getElementById("pag").value=elemen;
+      document.getElementById("up").action="/findall";
+      document.getElementById("up").submit();
+  }
+    }
+
+ // 尾页
+    function fun3(){
+      var elementById = document.getElementById("total").value;
+    var elementByIds= parseInt(elementById)-1;
+      document.getElementById("pag").value=elementByIds;
+      document.getElementById("up").action="/findall";
+      document.getElementById("up").submit();
+    }
+
+</script>
+</html>

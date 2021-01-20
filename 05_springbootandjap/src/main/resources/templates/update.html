@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<form th:action="@{/edit}" th:method="post">
+    <input type="hidden" th:name="id" th:value="${user.id}">
+    姓名:<input type="text" th:name="name" required th:value="${user.name}"><br>
+    地址:  省：
+    <select name="shengid" id="yi" th:onchange="yii()" required>
+        <span th:each="li:${list}">
+                <option  th:value="${li.tid}" th:text="${li.tname}"></option>
+            </span>
+    </select>
+    <input type="hidden" id="ids" th:value="${user.shengid}">
+    市：<select name="shiid" id="er" th:onchange="pp()" required>
+    <option th:value="${user.shiid}" th:text="${user.shi}"></option>
+</select>
+    县:<select name="xianid" id="op" required>
+    <option th:value="${user.xianid}" th:text="${user.xian}"></option>
+</select>
+    <br>
+    <!--    地址:<select th:name="shengid" th:id="p" th:onchange="st(this.value)">-->
+    <!--</select>-->
+    <!--    <select th:name="shiid" id="p2" th:onchange="st2(this.value)">-->
+    <!--    </select>-->
+
+    具体地址:<input th:name="dizhi" required th:value="${user.dizhi}"><br>
+    性别:<input type="radio" th:name="sex" th:value="1" checked="${user.sex=='1'}" required>男
+    <input type="radio" th:name="sex" th:value="2" checked="${user.sex}=='2' "required>女<br>
+    生日:<input type="date" th:name="birthday" th:value="${#dates.format(user.birthday,'yyyy-MM-dd')}" required><br>
+    <input type="submit" value="修改">
+<!--    <input type="hidden" th:text="${user.shengid}" th:id="oo">-->
+<!--    <input type="hidden" th:text="${user.sheng}" th:id="op">-->
+<!--    <input type="hidden" th:text="${user.shi}" th:id="opp">-->
+</form>
+</body>
+
+<script type="text/javascript">
+
+    function yii() {
+      var ids = $("#ids").val();
+
+        $("#er").empty();
+        var oid = $("#yi").val();
+        $.ajax({
+            type:"post",
+            url:"/sss",
+            data:{"oid":oid},
+            success:function (data) {
+                $("#er").append("<option value='0'>请选择</option>");
+                var all = eval(data);
+                for (i=0;i<all.length;i++){
+                    if(all[i].tid==ids){
+                        $("#er").append("<option selected='selected' value='"+all[i].tid+"'>"+all[i].tname+"</option>")
+                    }else {
+                        $("#er").append("<option value='"+all[i].tid+"'>"+all[i].tname+"</option>")
+                    }
+                }
+            }
+        })
+        $("#op").empty();
+    }
+    function pp() {
+        $("#op").empty();
+        var oid = $("#er").val();
+        $.ajax({
+            type:"post",
+            url:"/sss",
+            data:{"oid":oid},
+            success:function (data) {
+                $("#op").append("<option value='0'>请选择</option>");
+                var all = eval(data);
+                for (i=0;i<all.length;i++){
+                        $("#op").append("<option value='"+all[i].tid+"'>"+all[i].tname+"</option>");
+                }
+            }
+        })
+    }
+</script>
+</html>

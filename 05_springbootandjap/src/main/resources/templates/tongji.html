@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/js/echarts.js"></script>
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<input type="hidden" th:value="${nan}" id="n">
+<input type="hidden" th:value="${nv}" id="s">
+<div id="main" style="width: 500px;height:400px;"></div>
+<div>
+    <button><a th:href="@{/tuichu}">退出</a></button>
+</div>
+</body>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var nan=document.getElementById("n").value;
+    var nv=document.getElementById("s").value;
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '男女统计'
+        },
+        tooltip: {},
+        legend: {
+            data:['统计']
+        },
+        xAxis: {
+            data: ["男","女"]
+        },
+        yAxis: {},
+        series: [{
+            name: '性别',
+            type: 'bar',
+            data: [nan, nv]
+        }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</html>
