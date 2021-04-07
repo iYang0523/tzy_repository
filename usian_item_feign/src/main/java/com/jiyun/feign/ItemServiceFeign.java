@@ -1,8 +1,7 @@
 package com.jiyun.feign;
 
-import com.jiyun.pojo.TbItem;
-import com.jiyun.pojo.TbItemCat;
-import com.jiyun.pojo.TbItemParam;
+import com.jiyun.pojo.*;
+import com.jiyun.utils.CatResult;
 import com.jiyun.utils.PageResult;
 import com.jiyun.utils.Result;
 import com.jiyun.vo.ItemVo;
@@ -21,8 +20,8 @@ public interface ItemServiceFeign {
 @RequestMapping("/service/item/selectTbItemAllByPage")
    PageResult<TbItem> selectTbItemAllByPage(@RequestParam(value = "page") Integer page, @RequestParam(value = "rows") Integer rows);
 
-@PostMapping("/backend/itemCategory/selectItemCategoryByParentId")
-    List<TbItemCat> selectItemCategoryByParentId(@RequestParam(value = "id") Integer id);
+@RequestMapping("/backend/itemCategory/selectItemCategoryByParentId")
+    List<TbItemCat> selectItemCategoryByParentId(@RequestParam("id") Integer id);
 
 @RequestMapping("/backend/itemParam/selectItemParamByItemCatId/{itemCatId}")
     TbItemParam selectItemParamByItemCatId(@PathVariable("itemCatId") Integer itemCatId);
@@ -38,4 +37,34 @@ public interface ItemServiceFeign {
 
     @RequestMapping("/backend/item/updateTbItem")
     void updateTbItem(ItemVo itemVo);
+
+
+@RequestMapping("/backend/itemParam/selectItemParamAll")
+    PageResult<TbItemParam> selectItemParamAll(@RequestParam(value = "page") Integer page, @RequestParam(value = "rows") Integer rows);
+
+@RequestMapping("/backend/itemParam/deleteItemParamById")
+    void deleteItemParamById(@RequestParam("id")Long id);
+
+@RequestMapping("/backend/itemParam/insertItemParam")
+    Integer insertItemParam(@RequestParam("itemCatId")Long itemCatId,@RequestParam("paramData")String paramData);
+
+
+//
+// @RequestMapping("/frontend/itemCategory/selectItemCategoryAll")
+//     CatResult selectItemCategoryAll();
+
+
+//    /**
+//     * 查询商品介绍
+//     */
+//    @RequestMapping("/service/item/selectItemDescByItemId")
+//    public TbItemDesc selectItemDescByItemId(@RequestParam("itemId") Long itemId);
+//
+//    /**
+//     * 根据商品 ID 查询商品规格参数
+//     */
+//    @RequestMapping("/service/item/selectTbItemParamItemByItemId")
+//    public TbItemParamItem selectTbItemParamItemByItemId(@RequestParam("itemId") Long itemId);
+
+
 }

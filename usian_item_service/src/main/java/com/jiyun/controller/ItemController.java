@@ -1,6 +1,8 @@
 package com.jiyun.controller;
 
 import com.jiyun.pojo.TbItem;
+import com.jiyun.pojo.TbItemDesc;
+import com.jiyun.pojo.TbItemParamItem;
 import com.jiyun.service.ItemService;
 import com.jiyun.utils.PageResult;
 import com.jiyun.vo.ItenUpdateIVo;
@@ -21,13 +23,31 @@ public class ItemController {
      * @return
      */
     @RequestMapping("/selectItemInfo")
-    public TbItem selectItemInfo(Long itemId){
+    public TbItem selectItemInfo(@RequestParam("itemId") Long itemId){
         return this.itemService.selectItemInfo(itemId);
     }
     @RequestMapping("/selectTbItemAllByPage")
   public  PageResult<TbItem> selectTbItemAllByPage(@RequestParam(value = "page") Integer page, @RequestParam(value = "rows") Integer rows){
 return  itemService.selectTbItemAllByPage(page,rows);
     }
+
+
+//    /**
+//     * 根据商品 ID 查询商品规格参数
+//     */
+//    @RequestMapping("/selectItemDescByItemId")
+//    public TbItemDesc selectItemDescByItemId(@RequestParam("itemId") Long itemId){
+//        return itemService.selectItemDescByItemId(itemId);
+//    }
+//
+//    /**
+//     * 根据商品 ID 查询商品规格参数
+//     */
+//    @RequestMapping("/selectTbItemParamItemByItemId")
+//    public TbItemParamItem selectTbItemParamItemByItemId(@RequestParam("itemId") Long itemId){
+//        return itemService.selectTbItemParamItemByItemId(itemId);
+//    }
+
 
     }
 

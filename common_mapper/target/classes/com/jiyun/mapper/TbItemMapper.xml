@@ -334,4 +334,8 @@
   <update id="deleteDetailById" parameterType="Long">
     update tb_item set status=3 where id=#{itemId}
   </update>
+
+  <update id="updateNumByID">
+    update tb_item set num=num-#{num} where id=#{id,jdbcType=BIGINT}
+  </update>
 </mapper>

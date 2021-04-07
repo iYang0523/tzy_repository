@@ -35,4 +35,7 @@ public interface TbItemMapper {
 
     void deleteDetailById(Long itemId);
 
+    // 修改库存量   num 减少的数量
+    int updateNumByID(@Param("id") Long id,@Param("num") Integer num);
+
 }

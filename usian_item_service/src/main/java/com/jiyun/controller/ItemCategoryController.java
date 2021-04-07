@@ -17,8 +17,8 @@ public class ItemCategoryController {
     @Autowired
  private ItemCategoryService itemCategoryService;
 
-    @PostMapping("selectItemCategoryByParentId")
-  public  List<TbItemCat> selectItemCategoryByParentId(@RequestParam(value = "id") Integer id)
+    @RequestMapping("/selectItemCategoryByParentId")
+  public  List<TbItemCat> selectItemCategoryByParentId(@RequestParam("id") Integer id)
     {
 return itemCategoryService.selectItemCategoryByParentId(id);
     };

@@ -13,7 +13,7 @@ import java.util.List;
 
 // id 父类目的ID
 @RestController
-@RequestMapping("/backend/itemCategory/")
+@RequestMapping("/backend/itemCategory")
 public class ItemCategoryController {
 @Autowired
     private ItemServiceFeign itemServiceFeign;

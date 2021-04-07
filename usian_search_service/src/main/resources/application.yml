@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: usian-search-service
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/usian?characterEncoding=UTF-8
+    username: root
+    password: 123
+    type: com.alibaba.druid.pool.DruidDataSource
+  elasticsearch:
+    rest:
+      uris: 192.168.220.133:9200
+  rabbitmq:
+    host: 192.168.220.132
+    username: admin
+    password: 1111
+    virtual-host: /
+server:
+  port: 8095
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+

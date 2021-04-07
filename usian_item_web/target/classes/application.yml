@@ -1,6 +1,11 @@
 spring:
   application:
     name: usian-item-web
+  servlet:
+    multipart:
+       maxFileSize: 10MB
+       maxRequestSize: 100MB
+
 server:
   port: 8091
 eureka:
